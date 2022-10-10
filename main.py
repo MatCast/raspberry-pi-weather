@@ -3,4 +3,4 @@ import time
 
 while True:
     print(read_all())
-    time.sleep(1)
+    time.sleep(5)
