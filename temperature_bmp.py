@@ -26,4 +26,4 @@ def read_all_and_format():
         f"\nHumidity: {data['humidity']:.2f} %"
         f"\nPressure: {data['pressure']:.2f} bar\n"
     )
-    return data
+    return data_fmt
