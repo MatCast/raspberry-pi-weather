@@ -1,6 +1,6 @@
 import bme280
 import smbus2
-from time import sleep
+from datetime import datetime
 
 port = 1
 address = 0x76
@@ -20,10 +20,12 @@ def read_all():
 
 
 def read_all_and_format():
+    reading_time = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     data = read_all()
     data_fmt = (
-        f"Temperature: {data['temperature']:.2f} °C"
+        f"{reading_time}"
+        f"\nTemperature: {data['temperature']:.2f} °C"
         f"\nHumidity: {data['humidity']:.2f} %"
-        f"\nPressure: {data['pressure']:.2f} bar\n"
+        f"\nPressure: {data['pressure']:.2f} bar"
     )
     return data_fmt
