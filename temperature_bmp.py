@@ -12,7 +12,7 @@ bme280.load_calibration_params(bus, address)
 
 def read_all():
     bme280_data = bme280.sample(bus, address)
-    reading_date = datetime.datetime.utcnow()
+    reading_date = datetime.utcnow()
     data = {
         "timestamp": reading_date,
         "temperature": bme280_data.temperature,
