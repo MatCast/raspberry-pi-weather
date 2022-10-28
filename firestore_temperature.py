@@ -19,6 +19,15 @@ def add_temperature_reading(data):
     temp_ref.add(data)
 
 
+def read_from(from_timestamp):
+    query_ref = (
+        temp_ref.where("timestamp", ">=", from_timestamp)
+        .order_by("timestamp", direction=firestore.Query.DESCENDING)
+        .limit(432)  # 72h*6 (one reading every 10 minutes)
+    )
+    return [doc for doc in query_ref.stream()]
+
+
 if __name__ == "__main__":
     data = {
         "humidity": 58.09,
