@@ -1,10 +1,20 @@
 import threading
 import time
-
+from dotenv import load_dotenv
+from os.path import join, dirname
 import schedule
-# from temperature_bmp import read_all
+
+
 from firestore_temperature import add_temperature_reading
 import datetime
+
+dotenv_path = join(dirname(__file__), "env", ".env")
+load_dotenv(dotenv_path)
+
+PROD = os.getenv("PROD", False) == "True"
+
+if PROD:
+    from temperature_bmp import read_all
 
 
 def run_continuously(interval=2, func=None, *args, **kwargs):
@@ -35,16 +45,17 @@ def run_continuously(interval=2, func=None, *args, **kwargs):
 
 
 def read_temp_and_write():
-    # data = read_all()
-    data = {
-        "humidity": 58.09,
-        "pressure": 962.76,
-        "temperature": 16.03,
-        "timestamp": datetime.datetime.utcnow()
-    }
+    if PROD:
+        data = read_all()
+    else:
+        data = {
+            "humidity": 58.09,
+            "pressure": 962.76,
+            "temperature": 16.03,
+            "timestamp": datetime.datetime.utcnow(),
+        }
     add_temperature_reading(data)
 
 
 def scheduled_write():
     schedule.every(10).seconds.do(read_temp_and_write)
-
