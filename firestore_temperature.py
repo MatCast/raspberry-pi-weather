@@ -2,9 +2,11 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 import datetime
+from os.path import join, dirname
 
 # Use a service account.
-cred = credentials.Certificate("env/private_key.json")
+cred_path = dotenv_path = join(dirname(__file__), "env", "private_key.json")
+cred = credentials.Certificate(cred_path)
 
 try:
     app = firebase_admin.initialize_app(cred)
