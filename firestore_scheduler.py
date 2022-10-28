@@ -58,4 +58,4 @@ def read_temp_and_write():
 
 
 def scheduled_write():
-    schedule.every(10).seconds.do(read_temp_and_write)
+    schedule.every(10).minutes.do(read_temp_and_write)
