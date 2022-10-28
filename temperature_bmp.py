@@ -1,6 +1,7 @@
 import bme280
 import smbus2
 from datetime import datetime
+import pytz
 
 port = 1
 address = 0x76
@@ -11,7 +12,9 @@ bme280.load_calibration_params(bus, address)
 
 def read_all():
     bme280_data = bme280.sample(bus, address)
+    reading_date = datetime.datetime.utcnow()
     data = {
+        "timestamp": reading_date,
         "temperature": bme280_data.temperature,
         "humidity": bme280_data.humidity,
         "pressure": bme280_data.pressure,
@@ -20,7 +23,8 @@ def read_all():
 
 
 def read_all_and_format():
-    reading_time = datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
+    timestamp = data['timestamp']
+    reading_time = pytz.utc.localize(timestamp).astimezone().strftime("%Y-%m-%d, %H:%M:%S")
     data = read_all()
     data_fmt = (
         f"{reading_time}"
