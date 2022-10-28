@@ -23,8 +23,10 @@ def read_all():
 
 
 def read_all_and_format():
-    timestamp = data['timestamp']
-    reading_time = pytz.utc.localize(timestamp).astimezone().strftime("%Y-%m-%d, %H:%M:%S")
+    timestamp = data["timestamp"]
+    reading_time = (
+        pytz.utc.localize(timestamp).astimezone().strftime("%Y-%m-%d, %H:%M:%S")
+    )
     data = read_all()
     data_fmt = (
         f"{reading_time}"
