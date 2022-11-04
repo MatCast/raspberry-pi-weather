@@ -4,11 +4,11 @@ from datetime import datetime
 import pytz
 import time
 
-# port = 1
-# address = 0x76
-# bus = smbus2.SMBus(port)
+port = 1
+address = 0x76
+bus = smbus2.SMBus(port)
 
-# bme280.load_calibration_params(bus, address)
+bme280.load_calibration_params(bus, address)
 
 
 def read_all():
