@@ -15,7 +15,7 @@ load_dotenv(dotenv_path)
 PROD = os.getenv("PROD", False) == "True"
 
 if PROD:
-    from temperature_bmp import read_all
+    from temperature_bmp import read_multiple_times, get_avg
 
 
 def run_continuously(interval=2, func=None, *args, **kwargs):
@@ -47,7 +47,8 @@ def run_continuously(interval=2, func=None, *args, **kwargs):
 
 def read_temp_and_write():
     if PROD:
-        data = read_all()
+        data_list = read_multiple_times(secs=1, n_readings=5)
+        data = get_avg(data_list)
     else:
         data = {
             "humidity": 58.09,
